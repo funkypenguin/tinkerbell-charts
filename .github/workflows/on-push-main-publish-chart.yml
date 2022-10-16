@@ -1,0 +1,32 @@
+name: Publish helm chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+      - '.github/**'         
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Fetch history
+      run: git fetch --prune --unshallow
+
+    - name: Run chart-testing (lint), ensuring a version bump
+      id: lint
+      uses: helm/chart-testing-action@v2.2.1
+      with:
+        config: .ci/ct-config.yaml
+        command: lint
+
+    - name: Run chart-releaser
+      uses: helm/chart-releaser-action@v1.4.0
+      env:
+        CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"      
