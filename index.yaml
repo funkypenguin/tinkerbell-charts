@@ -3,6 +3,16 @@ entries:
   boots:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2023-08-03T09:29:31.322793004Z"
+    description: A Helm chart for Kubernetes
+    digest: 84ed7256f8a58a6e9ace8eeb3a11ba160fc9fac9fd43741dd5df0d4954386ecc
+    name: boots
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/boots-0.2.2-pre-02/boots-0.2.2-pre-02.tgz
+    version: 0.2.2-pre-02
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2023-08-03T04:38:33.542512339Z"
     description: A Helm chart for Kubernetes
     digest: e3e9a761f47598948e4935a925fa68420c2781f2cd7b91cd012f5e2e7723a045
@@ -148,4 +158,4 @@ entries:
     urls:
     - https://github.com/funkypenguin/tinkerbell-charts/releases/download/tink-0.1.1-pre-01/tink-0.1.1-pre-01.tgz
     version: 0.1.1-pre-01
-generated: "2023-08-03T04:38:34.024719148Z"
+generated: "2023-08-03T09:29:31.322840104Z"
