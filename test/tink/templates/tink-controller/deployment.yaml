@@ -1,0 +1,31 @@
+---
+# Source: tink/templates/tink-controller/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tink-controller
+  name: tink-controller
+  namespace: "dev-penguinpatrol"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tink-controller
+  template:
+    metadata:
+      labels:
+        app: tink-controller
+    spec:
+      containers:
+        - image: quay.io/tinkerbell/tink-controller:v0.8.0
+          imagePullPolicy: IfNotPresent
+          name: tink-controller
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+      serviceAccountName: tink-controller

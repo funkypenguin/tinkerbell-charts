@@ -1,8 +1,9 @@
-{{- if .Values.server.deploy }}
+---
+# Source: tink/templates/tink-server/cluster-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Values.server.roleName }}
+  name: tink-server-role
 rules:
   - apiGroups:
       - tinkerbell.org
@@ -33,4 +34,3 @@ rules:
       - patch
       - update
       - watch
-{{- end }}

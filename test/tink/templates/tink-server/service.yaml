@@ -1,0 +1,16 @@
+---
+# Source: tink/templates/tink-server/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tink-server
+  name: tink-server
+  namespace: "dev-penguinpatrol"
+spec:
+  ports:
+  - port: 42113
+    protocol: TCP
+    targetPort: tink-grpc
+  selector:
+    app: tink-server

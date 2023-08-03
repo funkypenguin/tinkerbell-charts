@@ -1,8 +1,9 @@
-{{- if .Values.deploy }}
+---
+# Source: tink/templates/tink-controller/cluster-role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Values.roleName }}
+  name: tink-controller-manager-role
 rules:
   - apiGroups:
       - tinkerbell.org
@@ -12,6 +13,19 @@ rules:
     verbs:
       - get
       - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - tinkerbell.org
+    resources:
+      - templates
+      - templates/status
+    verbs:
+      - get
+      - list
+      - patch
+      - update
       - watch
   - apiGroups:
       - tinkerbell.org
@@ -19,7 +33,9 @@ rules:
       - workflows
       - workflows/status
     verbs:
+      - delete
       - get
       - list
+      - patch
+      - update
       - watch
-{{- end }}
