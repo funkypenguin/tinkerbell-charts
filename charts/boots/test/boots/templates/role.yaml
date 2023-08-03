@@ -1,8 +1,10 @@
-{{- if .Values.deploy }}
+---
+# Source: boots/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ .Values.roleName }}
+  name: boots-role
+  namespace: "dev-penguinpatrol"
 rules:
   - apiGroups:
       - tinkerbell.org
@@ -22,4 +24,3 @@ rules:
       - get
       - list
       - watch
-{{- end }}

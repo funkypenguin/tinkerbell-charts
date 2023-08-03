@@ -1,3 +1,4 @@
+{{- if .Values.stack.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,26 +14,28 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/nginx-configmap.yaml") . | sha256sum }}
       labels:
         {{- with .Values.stack.selector }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- if not .Values.stack.service.enabled }}
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      {{- end }}
       containers:
       - name: {{ .Values.stack.name }}
         image: {{ .Values.stack.image }}
-        command: ["/bin/bash", "-c"]
+        command: ["/bin/bash", "-xeuc"]
         args:
-        - export POD_NAMESERVER=$(awk 'NR==2 {print $2}' /etc/resolv.conf);
-          envsubst '$POD_NAMESERVER' < /tmp/nginx.conf.template > /etc/nginx/nginx.conf;
-          nginx -g 'daemon off;'
+        - |
+          POD_NAMESERVER=$(awk '/nameserver/ {print $2}' /etc/resolv.conf) \
+            envsubst '$POD_NAMESERVER' \
+            </tmp/nginx.conf.template \
+            >/etc/nginx/nginx.conf
+          exec nginx -g 'daemon off;'
         ports:
-        {{- range .Values.boots.ports }}
-        - containerPort: {{ .port}}
-          name: {{ .name }}
-          protocol: {{ .protocol }}
-        {{- end }}
         - containerPort: {{ .Values.hegel.deployment.port }}
           protocol: TCP
           name: {{ .Values.hegel.deployment.portName }}
@@ -50,8 +53,10 @@ spec:
             cpu: 10m
             memory: 64Mi
         volumeMounts:
+        {{- if .Values.stack.hook.enabled }}
         - mountPath: /usr/share/nginx/html
           name: hook-artifacts
+        {{- end }}
         - mountPath: /tmp
           readOnly: true
           name: nginx-conf
@@ -59,35 +64,68 @@ spec:
       initContainers:
       - name: init-hook-download
         image: {{ .Values.stack.hook.image }}
-        command: ["/bin/sh", "-xc"]
-        args: # TODO(jacobweinstock): add checksum verification after download
-        - rm -rf /usr/share/nginx/html/checksums.txt;
-          touch /usr/share/nginx/html/checksums.txt;
+        command: ["/bin/sh", "-xeuc"]
+        args:
+        - |
+          cd /usr/share/nginx/html
           {{- range $index, $keys := .Values.stack.hook.downloads }}
-          echo "{{ $keys.sha512sum.kernel }}" >> /usr/share/nginx/html/checksums.txt;
-          echo "{{ $keys.sha512sum.initramfs }}" >> /usr/share/nginx/html/checksums.txt;
-          {{- end }}
-          cd /usr/share/nginx/html/;
-          sha512sum -c checksums.txt && exit 0;
-          {{- range $index, $keys := .Values.stack.hook.downloads }}
-          apk add wget;
-          echo downloading HOOK...;
-          wget -O /tmp/hook{{ $index }}.tar.gz {{ $keys.url }};
-          tar -zxvf /tmp/hook{{ $index }}.tar.gz -C "/usr/share/nginx/html/";
-          rm -rf /tmp/hook{{ $index }}.tar.gz;
+          p=/tmp/hook{{ $index }}.tar.gz
+          rm -f $p
+          wget -O $p {{ $keys.url }}
+          sha512sum -c <<EOF
+          {{ $keys.sha512sum }} $p
+          EOF
+          tar -zxvf $p
+          rm -f $p
           {{- end }}
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: hook-artifacts
       {{- end }}
       volumes:
+      {{- if .Values.stack.hook.enabled }}
       - name: hook-artifacts
         hostPath:
-          path: /opt/hook
+          path: {{ .Values.stack.hook.downloadsDest }}
           type: DirectoryOrCreate
+      {{- end }}
       - name: nginx-conf
         configMap:
           name: nginx-conf
           items:
             - key: nginx.conf
               path: nginx.conf.template
+{{- if .Values.stack.service.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.stack.name }}
+  name: {{ .Values.stack.name }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  type: {{ .Values.stack.service.type }}
+  {{- if eq .Values.stack.service.type "LoadBalancer" }}
+  {{- if .Values.stack.lbClass }}
+  loadBalancerClass: {{ .Values.stack.lbClass }}
+  {{- end }}
+  loadBalancerIP: {{ .Values.stack.loadBalancerIP }}
+  {{- end }}
+  externalTrafficPolicy: Local
+  ports:
+  - name: {{ .Values.hegel.name }}
+    port: {{ .Values.hegel.deployment.port }}
+    protocol: TCP
+  - name: {{ .Values.tink.server.name }}
+    port: {{ .Values.tink.server.deployment.port }}
+    protocol: TCP
+  - name: {{ .Values.stack.hook.name }}
+    port: {{ .Values.stack.hook.port }}
+    protocol: TCP
+  selector:
+    {{- with .Values.stack.selector }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end }}
+{{- end }}
