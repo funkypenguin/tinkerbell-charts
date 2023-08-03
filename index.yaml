@@ -3,6 +3,16 @@ entries:
   boots:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2023-08-03T04:38:33.542512339Z"
+    description: A Helm chart for Kubernetes
+    digest: e3e9a761f47598948e4935a925fa68420c2781f2cd7b91cd012f5e2e7723a045
+    name: boots
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/boots-0.2.2-pre-01/boots-0.2.2-pre-01.tgz
+    version: 0.2.2-pre-01
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2023-08-03T02:29:31.005320291Z"
     description: A Helm chart for Kubernetes
     digest: 08d8f87e41cc639759fa464e325aedb087f9253de9703fece302fa07109a6051
@@ -24,6 +34,16 @@ entries:
   hegel:
   - apiVersion: v2
     appVersion: 0.10.1
+    created: "2023-08-03T04:38:33.703818544Z"
+    description: A Helm chart for Kubernetes
+    digest: ecf5e4e4b9c8c87a5f7f1b2b1f0bb55f1dae63968c560ba8b8ec79c723c6ba58
+    name: hegel
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/hegel-0.3.2-pre-02/hegel-0.3.2-pre-02.tgz
+    version: 0.3.2-pre-02
+  - apiVersion: v2
+    appVersion: 0.10.1
     created: "2023-08-03T02:29:31.181102019Z"
     description: A Helm chart for Kubernetes
     digest: a4995fd670eb0c2fd0764fb2118a58a8eb584085f993712ae4e45b048ee3de51
@@ -43,6 +63,16 @@ entries:
     - https://github.com/funkypenguin/tinkerbell-charts/releases/download/hegel-0.1.1-pre-01/hegel-0.1.1-pre-01.tgz
     version: 0.1.1-pre-01
   rufio:
+  - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2023-08-03T04:38:33.850081493Z"
+    description: A Helm chart for Kubernetes
+    digest: 85b25c1fe8dbcd341fcfc3bbf1af06ab27842b6d51a7104cfd82547c2c21ce99
+    name: rufio
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/rufio-0.2.5-pre-01/rufio-0.2.5-pre-01.tgz
+    version: 0.2.5-pre-01
   - apiVersion: v2
     appVersion: 0.3.0
     created: "2023-08-03T02:29:31.382795971Z"
@@ -90,6 +120,16 @@ entries:
   tink:
   - apiVersion: v2
     appVersion: 0.8.0
+    created: "2023-08-03T04:38:34.024672848Z"
+    description: A Helm chart for Kubernetes
+    digest: 29b4d71446e02822a504f4a37f4973b0ff409de3577d385894834b9c720a797d
+    name: tink
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/tink-0.2.2-pre-01/tink-0.2.2-pre-01.tgz
+    version: 0.2.2-pre-01
+  - apiVersion: v2
+    appVersion: 0.8.0
     created: "2023-08-03T02:29:31.790859617Z"
     description: A Helm chart for Kubernetes
     digest: 1e9601f865aa90d8df3a0bdbfc61db3cdeaa38e3ef3dc1fc073f917cf7300c72
@@ -108,4 +148,4 @@ entries:
     urls:
     - https://github.com/funkypenguin/tinkerbell-charts/releases/download/tink-0.1.1-pre-01/tink-0.1.1-pre-01.tgz
     version: 0.1.1-pre-01
-generated: "2023-08-03T02:29:31.790883517Z"
+generated: "2023-08-03T04:38:34.024719148Z"
