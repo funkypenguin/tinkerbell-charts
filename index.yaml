@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   boots:
   - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2023-08-03T02:29:31.005320291Z"
+    description: A Helm chart for Kubernetes
+    digest: 08d8f87e41cc639759fa464e325aedb087f9253de9703fece302fa07109a6051
+    name: boots
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/boots-0.2.1/boots-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: 0.7.0
     created: "2022-10-16T22:09:44.680458898Z"
     description: A Helm chart for Kubernetes
@@ -12,6 +22,16 @@ entries:
     - https://github.com/funkypenguin/tinkerbell-charts/releases/download/boots-0.1.1-pre-01/boots-0.1.1-pre-01.tgz
     version: 0.1.1-pre-01
   hegel:
+  - apiVersion: v2
+    appVersion: 0.10.1
+    created: "2023-08-03T02:29:31.181102019Z"
+    description: A Helm chart for Kubernetes
+    digest: a4995fd670eb0c2fd0764fb2118a58a8eb584085f993712ae4e45b048ee3de51
+    name: hegel
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/hegel-0.3.1/hegel-0.3.1.tgz
+    version: 0.3.1
   - apiVersion: v2
     appVersion: 0.7.0
     created: "2022-10-16T22:37:54.437455832Z"
@@ -24,6 +44,16 @@ entries:
     version: 0.1.1-pre-01
   rufio:
   - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2023-08-03T02:29:31.382795971Z"
+    description: A Helm chart for Kubernetes
+    digest: 827033f001c9b2e19a2edf265e839a8106ff4c502889663a0c49a24e6524ba85
+    name: rufio
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/rufio-0.2.4/rufio-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
     appVersion: 0.1.0
     created: "2022-10-16T22:37:54.571476409Z"
     description: A Helm chart for Kubernetes
@@ -33,7 +63,41 @@ entries:
     urls:
     - https://github.com/funkypenguin/tinkerbell-charts/releases/download/rufio-0.1.1-pre-01/rufio-0.1.1-pre-01.tgz
     version: 0.1.1-pre-01
+  stack:
+  - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2023-08-03T02:29:31.591223982Z"
+    dependencies:
+    - name: tink
+      repository: file://../tink
+      version: 0.2.1
+    - name: boots
+      repository: file://../boots
+      version: 0.2.1
+    - name: rufio
+      repository: file://../rufio
+      version: 0.2.4
+    - name: hegel
+      repository: file://../hegel
+      version: 0.3.1
+    description: A Helm chart for Kubernetes
+    digest: f6fe38f9370958f79e4689f6262223aa6b7b5e24d4754dfd680a34a6b592f53c
+    name: stack
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/stack-0.3.0/stack-0.3.0.tgz
+    version: 0.3.0
   tink:
+  - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2023-08-03T02:29:31.790859617Z"
+    description: A Helm chart for Kubernetes
+    digest: 1e9601f865aa90d8df3a0bdbfc61db3cdeaa38e3ef3dc1fc073f917cf7300c72
+    name: tink
+    type: application
+    urls:
+    - https://github.com/funkypenguin/tinkerbell-charts/releases/download/tink-0.2.1/tink-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 0.7.0
     created: "2022-10-16T22:37:54.688619551Z"
@@ -44,4 +108,4 @@ entries:
     urls:
     - https://github.com/funkypenguin/tinkerbell-charts/releases/download/tink-0.1.1-pre-01/tink-0.1.1-pre-01.tgz
     version: 0.1.1-pre-01
-generated: "2022-10-16T22:37:54.688623951Z"
+generated: "2023-08-03T02:29:31.790883517Z"
